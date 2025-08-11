@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery</title>
+    <script src="jquery-3.7.1.js"></script>
+    <script>
+        // Browser DOM
+        /* 
+        (function(){
+            function onBtnGreetClick(){
+                // get the username
+                let txtUserName = document.getElementById('txtUserName')
+                let userName = txtUserName.value
+
+                // create a personalized greet message
+                let msg = 'Hi ' + userName + ', Have a nice day!';
+
+                // display the message
+                let divMessage = document.getElementById('divMessage')
+                divMessage.innerText = msg
+            }
+
+            function onDocumentLoad(){
+                let btnGreet = document.getElementById('btnGreet');
+                btnGreet.addEventListener('click', onBtnGreetClick)
+            }
+            window.addEventListener('DOMContentLoaded', onDocumentLoad)
+        })() 
+        */
+
+        // jQuery
+        $(function(){
+            $('#btnGreet').click(function(){
+                let userName = $('#txtUserName').val()
+                let msg = 'Hi ' + userName + ', Have a nice day!'
+                $('#divMessage').text(userName)
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Greeter</h1>
+    <label for="">User Name:</label>
+    <input type="text" name="" id="txtUserName">
+    <button id="btnGreet">Greet</button>
+    <div id="divMessage">[default message]</div>
+</body>
+</html>
