@@ -21,3 +21,21 @@ Session-3   : 03:45 PM to 05:00 PM
 ## Repository
 - https://github.com/tkmagesh/deshaw-react-aug-2025
 
+## References
+- Domain Driven Design - Eric Evans
+- Patterns of Enterprise Application Architecture - Martin Fowler
+- Agile Principles Patterns and Practices - Robert. C. Martin
+- Growing Object Oriented Oriented Software Guided By Tests - Freeman Steve
+
+
+## What is React?
+- JS library for building UI
+- Specialized for building SPA
+
+## SOLID Principles
+- S -> Single Responsibility Principle (SRP) [*]
+- O -> Open Closed Principle (OCP) [*] 
+- L -> Liskov's Substitution Principle (LSP)
+- I -> Interface Segregation Principle (ISP)
+- D -> Dependency Inversion Principle (DIP) [*]
+
