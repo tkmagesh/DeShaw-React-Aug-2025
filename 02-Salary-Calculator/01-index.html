@@ -22,7 +22,21 @@
     <script src="jquery-3.7.1.js"></script>
     <script>
         $(function(){
-            /*  */
+            $('#btnCalculate').click(function(){
+                let basic = parseInt($('#txtBasic').val()),
+                    hra = parseInt($('#txtHra').val()),
+                    da = parseInt($('#txtDa').val()),
+                    tax = parseInt($('#rangeTax').val());
+
+                let gross = basic + hra + da,
+                    net = gross * ((100-tax)/100);
+
+                $('#tdBasic').text(basic)
+                $('#tdHra').text(hra)
+                $('#tdDa').text(da)
+                $('#tdTax').text(tax)
+                $('#tdSalary').text(net)
+            })
         })
     </script>
 </head>
