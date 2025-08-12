@@ -39,3 +39,10 @@ Session-3   : 03:45 PM to 05:00 PM
 - I -> Interface Segregation Principle (ISP)
 - D -> Dependency Inversion Principle (DIP) [*]
 
+## React
+- Helps in creating Views (Components)
+- Component 
+    - Encapsulates Presentation + UI Logic + State
+    - Rerender the whole presentation when the `state` is changing
+- Uses VDOM to optimize the rendering of the UI
+

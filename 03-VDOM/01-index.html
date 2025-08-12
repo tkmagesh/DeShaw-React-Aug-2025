@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VDOM</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script>
+        let root;
+        let count = 0;
+        function onBtnRenderClick(){
+            // Rendering Browser DOM
+            // count++
+            document.getElementById('spanCounter').innerText = count;
+
+            // Rendering VDOM
+            let h1Ele = React.createElement('h1', { id : 'heading-1' }, 'Welcome to React!')
+            root.render(h1Ele)
+        }
+        function onDocumentLoad(){
+            let btnRender = document.getElementById('btnRender');
+            btnRender.addEventListener('click', onBtnRenderClick)
+
+            root = ReactDOM.createRoot(document.getElementById('root'))
+        }
+        window.addEventListener('DOMContentLoaded', onDocumentLoad)
+    </script>
+</head>
+<body>
+    <button id="btnRender">Render</button>
+    <h3>Browser DOM</h3>
+    <hr>
+    <div>
+        <label for="">Count :</label>
+        <span id="spanCounter">[counter]</span>
+    </div>
+    <h3>React VDOM</h3>
+    <hr>
+    <div id="root"></div>
+</body>
+</html>
