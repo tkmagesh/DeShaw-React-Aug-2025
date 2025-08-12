@@ -14,12 +14,17 @@
             const onBtnAddClick = () => {
                 setProductNames([...productNames, newProductName])
             }
+
+            const onDeleteClick = (p) => {
+                setProductNames(productNames.filter(pn => pn !== p))
+            };
+
             const productItems = productNames.map((productName, idx) => (
                 <li key={idx}>
                     <span> {productName} </span>
-                    <button>X</button>
+                    <button onClick={() => onDeleteClick(productName)}>X</button>
                 </li>
-            ))
+            ));
             return (
                 <div>
                     <h1>Products</h1>
