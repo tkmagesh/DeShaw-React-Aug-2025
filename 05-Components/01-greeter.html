@@ -9,24 +9,46 @@
     <script src="react-dom.development.js"></script>
     <script type="text/babel">
         
-        function Greeter(){
-            /* 
-            const arr =  React.useState('[default message]')
-            let msg = arr[0]
-            let setMsg = arr[1] 
-            */
-
+        /* function Greeter(){
+            // using ref
             const [msg, setMsg] = React.useState('[default message]')
+            const txtUserNameRef = React.useRef()
 
             const onBtnGreetClick = () => {
-                setMsg('Greet button clicked')
+                let userName = txtUserNameRef.current.value
+                setMsg(`Hi ${userName}, Have a nice day!`)
             }
             return (
                 <div>
                     <h1>Greeter</h1>
                     <hr/>
                     <label htmlFor="">User Name :</label>
-                    <input type="text" name="" id=""/>
+                    <input type="text" ref={txtUserNameRef}/>
+                    <button onClick={onBtnGreetClick}>Greet</button>
+                    <div>{msg}</div>
+                </div>
+            )
+        }
+ */
+
+        function Greeter(){
+            // using the state
+            const [msg, setMsg] = React.useState('[default message]')
+            const [userName, setUserName] = React.useState('');
+
+            const onBtnGreetClick = () => {
+                setMsg(`Hi ${userName}, Have a nice day!`)
+            };
+
+            const onTxtUserNameChange = (e) => {
+                setUserName(e.target.value)
+            };
+            return (
+                <div>
+                    <h1>Greeter</h1>
+                    <hr/>
+                    <label htmlFor="">User Name :</label>
+                    <input type="text" onChange={onTxtUserNameChange}/>
                     <button onClick={onBtnGreetClick}>Greet</button>
                     <div>{msg}</div>
                 </div>
