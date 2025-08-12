@@ -46,3 +46,10 @@ Session-3   : 03:45 PM to 05:00 PM
     - Rerender the whole presentation when the `state` is changing
 - Uses VDOM to optimize the rendering of the UI
 
+### JSX
+| HTML | JSX |
+| ---- | ---- |
+| Can have tags without the corresponding close tags | Every tag must have the corresponding close tag |
+| Can use `class` attribute | Use `className` instead of `class` |
+| Can use `for` attribute | Use `htmlFor` instead of `for` |
+

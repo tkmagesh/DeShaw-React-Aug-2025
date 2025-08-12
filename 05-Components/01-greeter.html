@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeter</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script type="text/babel">
+        
+        function Greeter(){
+            /* 
+            const arr =  React.useState('[default message]')
+            let msg = arr[0]
+            let setMsg = arr[1] 
+            */
+
+            const [msg, setMsg] = React.useState('[default message]')
+
+            const onBtnGreetClick = () => {
+                setMsg('Greet button clicked')
+            }
+            return (
+                <div>
+                    <h1>Greeter</h1>
+                    <hr/>
+                    <label htmlFor="">User Name :</label>
+                    <input type="text" name="" id=""/>
+                    <button onClick={onBtnGreetClick}>Greet</button>
+                    <div>{msg}</div>
+                </div>
+            )
+        }
+
+        let root = ReactDOM.createRoot(document.getElementById('root'))
+        root.render(React.createElement(Greeter))
+    </script>
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+</body>
+</html>
