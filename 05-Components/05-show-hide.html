@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShowHide</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script type="text/babel">
+        const ShowHide = () => {
+            const [show, setShow] = React.useState(true)
+            return (
+                <div>
+                    <h1>Show/Hide</h1>
+                    <hr/>
+                    <div>
+                        <label htmlFor="">Show ?:</label>
+                        <input 
+                            type="checkbox" 
+                            checked={show} 
+                            onChange={ e => setShow(e.target.checked)}
+                        />
+                    </div>
+                    { show && (<div>
+                                <h3>Content</h3>
+                                <p>Fugiat reprehenderit voluptate mollit esse incididunt. Occaecat minim et officia occaecat veniam tempor culpa veniam reprehenderit irure ad. Sunt dolore tempor excepteur id adipisicing sunt. Eu consectetur sunt occaecat pariatur ut est excepteur velit. Proident labore ea Lorem voluptate voluptate tempor dolore ullamco nisi et ipsum. In dolor anim elit veniam. Elit sit est consequat incididunt irure minim mollit sint non aliquip eu veniam consequat.Est eiusmod magna ut eiusmod mollit aliqua. Reprehenderit eu consequat dolore officia officia cupidatat occaecat voluptate et nulla. Eiusmod culpa culpa ex dolore sit cupidatat exercitation duis cupidatat magna labore. Ullamco ex laboris adipisicing id ea ex aliquip. Fugiat nulla elit nulla ullamco ea aute id sint labore aliquip reprehenderit excepteur voluptate.</p>
+                            </div>)
+                    }
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'))
+        root.render(<ShowHide/>)
+    </script>
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+</body>
+</html>
