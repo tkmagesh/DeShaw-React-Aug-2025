@@ -53,3 +53,43 @@ Session-3   : 03:45 PM to 05:00 PM
 | Can use `class` attribute | Use `className` instead of `class` |
 | Can use `for` attribute | Use `htmlFor` instead of `for` |
 
+### State Categories
+#### UI State
+- Data that primarily deals with the UI needs of the application
+- It is very unlikely that a change in this state need to be reflected in other parts of the application
+- advisable to maintain this in the component state (React.useState())
+
+#### Domain/App State
+- Data that primarily deals with the 'domain' logic of the application
+- It is HIGHLY likely that a change in this data need to be reflected in other parts of the application
+- advisable to maintain this outside the component hierarchy
+
+## State Management
+### Store
+- In-memory object that encapsulate ALL of the 'application/domain state' outside the component hierarchy
+- ONLY one `store` instance for the whole application
+- Can be subscribed for notifications if the state is changing
+- Methods
+    - getState() ==> returns the store state
+    - subscribe(callbackFn)
+    - dispatch(action)
+
+### Reducer
+- Function that determines the state changes based on the action
+```javascript
+function reducerFnName (currentState, action){
+    // return newState if it knows how to process the action
+    // otherwise return the given currentState as it is
+}
+```
+### Action
+- Represents the 'user action'
+- Typically an object with 'type' attribute (to uniquely identify the actions)
+- Optionally, can have 'payload' to carry any supporting data
+- ex:
+```js
+let action = { type : 'MAILS_DELETE', payload : mail_to_delete }
+```
+
+### Data Flow
+![image](./images/state-management.png)
