@@ -1,7 +1,8 @@
 const StateManager = (() => {
     let _currentState = undefined,
         _callbackFns = [],
-        _reducerFn = undefined;
+        _reducerFn = undefined,
+        _init_action = { type : '@@INIT/Action'}
 
     function getState(){
         return _currentState;
@@ -13,7 +14,7 @@ const StateManager = (() => {
 
     // private
     function _notifyChanges(){
-        _callbackFns.forEach(callbackFn => callbackFn)
+        _callbackFns.forEach(callbackFn => callbackFn())
     }
 
     function dispatch(action){
@@ -28,12 +29,18 @@ const StateManager = (() => {
         if (typeof reducerFn !== 'function') 
             throw new Error('a reducer is mandatory to create the store')
         _reducerFn = reducerFn;
+        
+        // call the reducer function with the 'init action' to initialize the 'currentState with a valid default state
+        _currentState = _reducerFn(undefined, _init_action)
+
         // call the reducer to initialize the currentState with a valid default state
-        return {
+        const store = {
             getState,
             subscribe,
             dispatch
         }
+
+        return store;
     }
 
     return {

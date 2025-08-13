@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Manager</title>
+    <script src="state-manager.js"></script>
+</head>
+<body>
+    <div>Experiment with the state manager in the browser console</div>
+    <pre>
+        <code >
+            // copy paste the following one after another in the browser console
+            const dec_action = { type : 'DECREMENT' },
+                inc_action = { type : 'INCREMENT' };
+            
+            function counterReducer(currentState = 0, action){
+                if (action.type === 'INCREMENT') return currentState + 1;
+                if (action.type === 'DECREMENT') return currentState - 1;
+                return currentState;
+            }
+            
+            const store = StateManager.createStore(counterReducer)
+            
+            store.subscribe(() => console.log('current state :', store.getState()))
+            
+            store.dispatch(inc_action)
+            
+            store.dispatch(inc_action)
+            
+            store.dispatch(inc_action)
+            
+            store.dispatch(dec_action)
+            
+            store.dispatch(dec_action)
+        </code>
+    </pre>
+</body>
+</html>
