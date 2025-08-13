@@ -1,3 +1,4 @@
+/* IMPORTANT : NOT PRODUCTION READY */
 const StateManager = (() => {
     let _currentState = undefined,
         _callbackFns = [],
