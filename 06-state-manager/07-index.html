@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Manager</title>
+    <script src="state-manager.js"></script>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <!-- 
+    1. initial version
+    2. Remove the direct dependency on the 'store' in the component
+    3. Remove the responsibility of 'creating' actions from the component (introducing 'action creators')
+    4. Delete the responsibility of 'dispatching actions' to 'action dispatchers'
+    5. Simplify passing the action dispatcher functions to the component
+    6. Further refactoring
+    7. Create a generalized version of 'bindCounterActionCreators'
+    -->
+    <script type="text/babel">
+        function counterReducer(currentState = 0, action){
+            if (action.type === 'INCREMENT') return currentState + 1;
+            if (action.type === 'DECREMENT') return currentState - 1;
+            return currentState;
+        }
+        
+        const Counter = ({count, decrement, increment}) => {
+            return (
+                <>
+                    <h1>Counter</h1>
+                    <hr/>
+                    <button onClick={decrement}>Decrement</button>
+                    <span> {count} </span>
+                    <button onClick={increment}>Increment</button>
+                </>
+            )
+        }
+
+        const counterActionCreators = {
+            decrement(){
+                const action = { type : 'DECREMENT' };
+                return action; 
+            },
+            increment(){
+                const action = { type : 'INCREMENT' };
+                return action;
+            }
+        }
+
+        /* 
+        function bindCounterActionCreators(counterActionCreators, dispatch){
+            const actionDispatchers = {
+                decrement(){
+                    const action = counterActionCreators.decrement()
+                    dispatch(action)
+                },
+                increment(){
+                    const action = counterActionCreators.increment()
+                    dispatch(action)
+                }
+            }
+            return actionDispatchers;
+        }  
+        */
+
+        function bindActionCreators(actionCreators, dispatch){
+            const actionDispatchers = {}
+            for(let key in actionCreators){
+                actionDispatchers[key] = function(...args){
+                    const action = actionCreators[key](...args)
+                    dispatch(action)
+                }
+            }
+            return actionDispatchers
+        }
+
+        const store = StateManager.createStore(counterReducer)
+        const counterActionDispatchers = bindActionCreators(counterActionCreators, store.dispatch);
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        function renderApp(){
+            const count = store.getState()
+            root.render(<Counter 
+                count={count} 
+                {...counterActionDispatchers}
+            />)
+        }
+        renderApp()
+        store.subscribe(renderApp)
+        
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
