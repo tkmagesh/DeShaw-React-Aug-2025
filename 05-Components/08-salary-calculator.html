@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator</title>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+     <style>
+        body{
+            margin-left: 50px;
+        }
+
+        #root > h1 {
+            color : cornflowerblue
+        }
+        .field{
+            margin-bottom: 10px;
+        }
+        label{
+            display: block;
+        }
+        td{
+            padding: 10px;
+            font-size: 16pt;
+        }
+    </style>
+    <script type="text/babel">
+        class SalaryCalculatorModel{
+            basic = 0;
+            hra = 0;
+            da = 0;
+            tax = 0;
+            salary = 0;
+
+            calculate(){
+                const gross = this.basic + this.hra + this.da,
+                    net = gross * ((100-this.tax)/100)
+                this.salary = net;
+            }
+        }
+        function SalaryCalculator({ model }){
+            const [salary, setSalary] = React.useState(0)
+            const onBtnCalculateClick = () => {
+                model.calculate()
+                setSalary(model.salary)
+            }
+            return (
+                <>
+                    <h1>Salary Calculator</h1>
+                    <hr/>
+                    <section>
+                        <div className="field">
+                            <label htmlFor="">Basic :</label>
+                            <input type="number" onChange={e => model.basic = parseInt(e.target.value)} id="txtBasic"/>
+                        </div>
+                        <div className="field">
+                            <label htmlFor="">HRA :</label>
+                            <input type="number" onChange={e => model.hra = parseInt(e.target.value)} id="txtHra"/>
+                        </div>
+                        <div className="field">
+                            <label htmlFor="">DA :</label>
+                            <input type="number" onChange={e => model.da = parseInt(e.target.value)} id="txtDa"/>
+                        </div>
+                        <div className="field">
+                            <label htmlFor="">Tax :</label>
+                            <input type="range" onChange={e => model.tax = parseInt(e.target.value)} id="rangeTax" min="0" max="30" />
+                        </div>
+                        <div className="field">
+                            <button id="btnCalculate" onClick={onBtnCalculateClick}>Calculate</button>
+                        </div>
+                        <div className="field">
+                            <table>
+                                <tr>
+                                    <th>Basic</th>
+                                    <th>HRA</th>
+                                    <th>DA</th>
+                                    <th>Tax</th>
+                                    <th>Salary</th>
+                                </tr>
+                                <tr>
+                                    <td id="tdBasic">{model.basic}</td>
+                                    <td id="tdHra">{model.hra}</td>
+                                    <td id="tdDa">{model.da}</td>
+                                    <td id="tdTax">{model.tax}</td>
+                                    <td id="tdSalary">{model.salary}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                </>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'))
+        const model = new SalaryCalculatorModel()
+        root.render(<SalaryCalculator model={model}/>)
+    </script>
+</head>
+<body>
+    <div id="root">
+        
+    </div>
+</body>
+</html>
