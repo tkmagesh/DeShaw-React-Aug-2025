@@ -8,10 +8,10 @@
     <script src="babel.min.js"></script>
     <script src="react.development.js"></script>
     <script src="react-dom.development.js"></script>
+    <!-- 
+    1. initial version
+    -->
     <script type="text/babel">
-        const dec_action = { type : 'DECREMENT' },
-            inc_action = { type : 'INCREMENT' };
-        
         function counterReducer(currentState = 0, action){
             if (action.type === 'INCREMENT') return currentState + 1;
             if (action.type === 'DECREMENT') return currentState - 1;
@@ -20,20 +20,36 @@
         
         const store = StateManager.createStore(counterReducer)
 
-        const Counter = () => {
+        const Counter = ({store}) => {
+            const dec_action = { type : 'DECREMENT' },
+                inc_action = { type : 'INCREMENT' };
+            const count = store.getState()
+
+            const onBtnDecrementClick = () => {
+                store.dispatch(dec_action)
+            }
+
+            const onBtnIncrementClick = () => {
+                store.dispatch(inc_action)
+            }
+
             return (
                 <>
                     <h1>Counter</h1>
                     <hr/>
-                    <button>Decrement</button>
-                    <span> [count] </span>
-                    <button>Increment</button>
+                    <button onClick={onBtnDecrementClick}>Decrement</button>
+                    <span> {count} </span>
+                    <button onClick={onBtnIncrementClick}>Increment</button>
                 </>
             )
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<Counter/>)
+        function renderApp(){
+            root.render(<Counter store={store}/>)
+        }
+        renderApp()
+        store.subscribe(renderApp)
         
     </script>
 </head>
