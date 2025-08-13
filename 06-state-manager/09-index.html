@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Manager</title>
+    <script src="state-manager.js"></script>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <!-- 
+    1. initial version
+    2. Remove the direct dependency on the 'store' in the component
+    3. Remove the responsibility of 'creating' actions from the component (introducing 'action creators')
+    4. Delete the responsibility of 'dispatching actions' to 'action dispatchers'
+    5. Simplify passing the action dispatcher functions to the component
+    6. Further refactoring
+    7. Create a generalized version of 'bindCounterActionCreators'
+    8. Move the generic 'bindActionCreators' to 'state-manager.js'
+    9. Upgrade the app to 'increment' & 'decrement' by a user given 'delta' value (instead of a constant value 1)
+    -->
+    <script type="text/babel">
+        function counterReducer(currentState = 0, action){
+            if (action.type === 'INCREMENT') return currentState + action.payload;
+            if (action.type === 'DECREMENT') return currentState - action.payload;
+            return currentState;
+        }
+        
+        const Counter = ({count, decrement, increment}) => {
+            const [delta, setDelta] = React.useState(0)
+            return (
+                <>
+                    <h1>Counter</h1>
+                    <hr/>
+                    <label>Delta : </label>
+                    <input type="number" value={delta} onChange={e => setDelta(parseInt(e.target.value))} />
+                    <br/>
+                    <button onClick={() => decrement(delta)}>Decrement</button>
+                    <span> {count} </span>
+                    <button onClick={() => increment(delta)}>Increment</button>
+                </>
+            )
+        }
+
+        const counterActionCreators = {
+            decrement(delta){
+                const action = { type : 'DECREMENT', payload : delta };
+                return action; 
+            },
+            increment(delta){
+                const action = { type : 'INCREMENT', payload : delta };
+                return action;
+            }
+        }
+
+        const store = StateManager.createStore(counterReducer)
+        const counterActionDispatchers = StateManager.bindActionCreators(counterActionCreators, store.dispatch);
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        function renderApp(){
+            const count = store.getState()
+            root.render(<Counter 
+                count={count} 
+                {...counterActionDispatchers}
+            />)
+        }
+        renderApp()
+        store.subscribe(renderApp)
+        
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
