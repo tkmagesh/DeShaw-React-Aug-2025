@@ -1,6 +1,14 @@
-import {createStore} from 'redux';
+import {combineReducers, createStore} from 'redux';
 import bugsReducer from '../bugs/reducers/bugs-reducer';
+import projectsReducer from "../projects/reducers/projects-reducer";
 
-const store = createStore(bugsReducer);
+const rootReducer = combineReducers({
+    bugs : bugsReducer,
+    projects : projectsReducer
+})
+
+const store = createStore(rootReducer);
+
+console.log(store.getState())
 
 export default store;

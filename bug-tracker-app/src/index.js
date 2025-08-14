@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import Bugs from "./bugs";
 import store from "./store";
 import { Provider } from 'react-redux'
+import Projects from "./projects";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -11,6 +12,8 @@ root.render(
     <hr />
     <Provider store={store}>
       <Bugs/>
+      <hr/>
+      <Projects/>
     </Provider>
   </div>
 );
