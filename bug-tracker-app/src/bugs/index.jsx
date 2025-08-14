@@ -4,16 +4,21 @@ import BugList from './components/bug-list';
 import './index.css';
 import useBugs from './hooks/use-bugs';
 import useBugsActions from './hooks/use-bug-actions';
+import { useCallback, useEffect } from 'react';
 
 const Bugs = () => {
 
   const { bugs, closedCount, projects} = useBugs()
-  const { createNew, toggle, remove, removeClosed } = useBugsActions() 
+  const { createNew, toggle, remove, removeClosed, load } = useBugsActions() 
+  
+  const loadCb = useCallback(load)
+  useEffect(loadCb, []);
   
   return (
     <>
       <h3>Bugs</h3>
 
+      {/* <button onClick={load}>Load Bugs</button> */}
       {/* BugStats */}
       <BugStats count={bugs.length} closedCount={closedCount} />
       

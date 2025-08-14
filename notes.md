@@ -137,3 +137,27 @@ src
 - Accepts State & Action Dispatchers from the container components
 - Doesn't directly interact with the redux infrastructure (should not use 'useSelector', 'useDispatch' etc)
 - Can have any number of presentation components
+
+### Persisting data in the server
+
+#### Setup a Dev server for Rest API
+- Prepare the data in a json file
+- Use 'json-server' to serve the data from the json file as 'REST' endpoints
+
+```shell
+npx json-server@0.14.0 db.json -p 3030
+```
+
+#### App comm to the server
+- Install & Use 'axios' for REST API calls
+```shell
+npm install axios
+```
+
+- Use redux-thunk for async actions
+```shell
+npm install redux-thunk
+```
+- Async actions MUST return a `function` (not action 'objects')
+- The returned function will be invoked with 'dispatch' & 'getState'
+- The action must be dispatched (not returned) once the async operation is completed

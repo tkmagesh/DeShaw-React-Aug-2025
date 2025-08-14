@@ -1,14 +1,15 @@
-// TO BE FIXED
-let _currentBugId = 0;
-
+import bugApi from "../services/bug-api";
 export function createNew(bugName, projectId) {
-  const newBug = {
-    id: ++_currentBugId,
-    name: bugName,
-    isClosed: false,
-    createdAt: new Date(),
-    projectId : projectId
-  };
-  const action = { type: "BUGS_ADD", payload: newBug };
-  return action;
+  return async function(dispatch, getState){
+    const newBugData = {
+      id: 0,
+      name: bugName,
+      isClosed: false,
+      createdAt: new Date(),
+      projectId : projectId
+    };
+    const newBug = await bugApi.save(newBugData)
+    const action = { type: "BUGS_ADD", payload: newBug };
+    dispatch(action);
+  }
 }
