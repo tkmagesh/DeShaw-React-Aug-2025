@@ -42,43 +42,69 @@
     <script src="redux.js"></script>
     <!-- 
     Use Cases:
-    1. Add new bugs
+    1. Add new bugs (action)
     2. List the added bugs
-    3. Toggle the 'closed' status of any bug
-    4. Remove any bug
+    3. Toggle the 'closed' status of any bug (action)
+    4. Remove any bug (action)
     5. Display stats (# of closed bugs / total # of bugs)
-    6. Organize the code 
-    7. Persist the bugs in the server
-    8. Add projects module
-    9. Build and Deploy
+    6. Remove all the closed bugs (action)
+    7. Organize the code 
+    8. Persist the bugs in the server
+    9. Add projects module
+    10. Build and Deploy
     -->
     <script type="text/babel">
-        const Bugs = () => {
+        // TO BE FIXED
+        let _currentBugId = 0;
+        const bugActionCreators = {
+            createNew(bugName){
+                const newBug = {
+                    id : ++_currentBugId,
+                    name : bugName,
+                    isClosed :false,
+                    createdAt : new Date()
+                }
+                const action = { type : 'BUGS_ADD', payload : newBug}
+                return action;
+            }
+        }
+
+        function bugsReducer(currentState = [], action){
+            switch (action.type) {
+                case 'BUGS_ADD':
+                    return [...currentState, action.payload]
+                    break;
+            
+                default:
+                    break;
+            }
+            return currentState;
+        }
+
+        const Bugs = ({bugs, createNew}) => {
+            const [newBugName, setNewBugName] = React.useState('')
             return (
                 <>
                     <h3>Bugs</h3>
                     <section className="stats">
                         <span className="closed">1</span>
                         <span> / </span>
-                        <span>2</span>
+                        <span>{bugs.length}</span>
                     </section>
                     <section className="editor">
                         <label htmlFor="">Bug Name :</label>
-                        <input type="text" name="" id=""/>
-                        <button>Add</button>
+                        <input type="text" value={newBugName} onChange={e => setNewBugName(e.target.value)}/>
+                        <button onClick={() => createNew(newBugName)}>Add</button>
                     </section>
                     <section className="list">
                         <ul>
-                            <li>
-                                <span className="bugname">[Bug - 1]</span>
-                                <div className="date">[createdAt]</div>
+                            {bugs.map(bug => (<li key={bug.id}>
+                                <span className="bugname">{bug.name}</span>
+                                <div className="date">[{bug.createdAt.toString()}]</div>
                                 <button>Remove</button>
-                            </li>
-                            <li>
-                                <span className="bugname closed">[Bug - 2]</span>
-                                <div className="date">[createdAt]</div>
-                                <button>Remove</button>
-                            </li>
+                            </li>)
+                            )}
+                            
                         </ul>
                         <button>Remove Closed</button>
                     </section>
@@ -86,8 +112,16 @@
             )
         }
 
+        const store = Redux.createStore(bugsReducer);
+        const bugActionDispatchers = Redux.bindActionCreators(bugActionCreators, store.dispatch);
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<Bugs/>)
+
+        function renderApp(){
+            const bugs = store.getState()
+            root.render(<Bugs bugs={bugs} {...bugActionDispatchers}/>)
+        }
+        renderApp()
+        store.subscribe(renderApp)
     </script>
 </head>
 <body>
