@@ -71,6 +71,16 @@
                 const toggledBug = { ...bugToToggle, isClosed : !bugToToggle.isClosed}
                 const action = { type : 'BUGS_REPLACE', payload : toggledBug}
                 return action;
+            },
+            remove(bugToRemove){
+                const action = { type : 'BUGS_REMOVE', payload : bugToRemove}
+                return action;
+            },
+            /* By default, the action creators have no access to the currentstate. */
+            removeClosed(bugs /* TO BE FIXED */){
+                const bugsToRetain = bugs.filter(bug => !bug.isClosed)
+                const action = { type : 'BUGS_INIT', payload : bugsToRetain}
+                return action;
             }
         }
 
@@ -83,13 +93,20 @@
                     const bugToReplace = action.payload;
                     return currentState.map(bug => bug.id === bugToReplace.id ? bugToReplace : bug)
                     break;
+                case 'BUGS_REMOVE':
+                    const bugToRemove = action.payload;
+                    return currentState.filter(bug => bug.id !== bugToRemove.id)
+                    break;
+                case 'BUGS_INIT':
+                    return action.payload;
+                    break;
                 default:
                     break;
             }
             return currentState;
         }
 
-        const Bugs = ({bugs, createNew, toggle}) => {
+        const Bugs = ({bugs, createNew, toggle, remove, removeClosed}) => {
             const [newBugName, setNewBugName] = React.useState('')
             const closedCount = bugs.reduce((count, bug) => bug.isClosed ? count + 1 : count, 0)
             return (
@@ -112,12 +129,12 @@
                                     onClick={() => toggle(bug)}
                                     >{bug.name}</span>
                                 <div className="date">[{bug.createdAt.toString()}]</div>
-                                <button>Remove</button>
+                                <button onClick={() => remove(bug)}>Remove</button>
                             </li>)
                             )}
                             
                         </ul>
-                        <button>Remove Closed</button>
+                        <button onClick={() => removeClosed(bugs)}>Remove Closed</button>
                     </section>
                 </>
             )
