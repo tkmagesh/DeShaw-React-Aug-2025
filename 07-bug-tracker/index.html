@@ -66,6 +66,11 @@
                 }
                 const action = { type : 'BUGS_ADD', payload : newBug}
                 return action;
+            },
+            toggle(bugToToggle){
+                const toggledBug = { ...bugToToggle, isClosed : !bugToToggle.isClosed}
+                const action = { type : 'BUGS_REPLACE', payload : toggledBug}
+                return action;
             }
         }
 
@@ -74,20 +79,24 @@
                 case 'BUGS_ADD':
                     return [...currentState, action.payload]
                     break;
-            
+                case 'BUGS_REPLACE':
+                    const bugToReplace = action.payload;
+                    return currentState.map(bug => bug.id === bugToReplace.id ? bugToReplace : bug)
+                    break;
                 default:
                     break;
             }
             return currentState;
         }
 
-        const Bugs = ({bugs, createNew}) => {
+        const Bugs = ({bugs, createNew, toggle}) => {
             const [newBugName, setNewBugName] = React.useState('')
+            const closedCount = bugs.reduce((count, bug) => bug.isClosed ? count + 1 : count, 0)
             return (
                 <>
                     <h3>Bugs</h3>
                     <section className="stats">
-                        <span className="closed">1</span>
+                        <span className="closed">{closedCount}</span>
                         <span> / </span>
                         <span>{bugs.length}</span>
                     </section>
@@ -99,7 +108,9 @@
                     <section className="list">
                         <ul>
                             {bugs.map(bug => (<li key={bug.id}>
-                                <span className="bugname">{bug.name}</span>
+                                <span className={"bugname " + (bug.isClosed ? 'closed' : '')}
+                                    onClick={() => toggle(bug)}
+                                    >{bug.name}</span>
                                 <div className="date">[{bug.createdAt.toString()}]</div>
                                 <button>Remove</button>
                             </li>)
