@@ -106,41 +106,64 @@
             return currentState;
         }
 
-        const Bugs = ({bugs, createNew, toggle, remove, removeClosed}) => {
+        const BugStats = ({count, closedCount}) => {
+            return (
+                <section className="stats">
+                    <span className="closed">{closedCount}</span>
+                    <span> / </span>
+                    <span>{count}</span>
+                </section>
+            )
+        }
+
+        const BugEditor = ({createNew}) => {
             const [newBugName, setNewBugName] = React.useState('')
+            return (
+                <section className="editor">
+                    <label htmlFor="">Bug Name :</label>
+                    <input type="text" value={newBugName} onChange={e => setNewBugName(e.target.value)}/>
+                    <button onClick={() => createNew(newBugName)}>Add</button>
+                </section>
+            )
+        }
+
+        const BugItem = ({bug, toggle, remove}) => {
+            return (
+                <li>
+                    <span className={"bugname " + (bug.isClosed ? 'closed' : '')}
+                        onClick={() => toggle(bug)}
+                        >{bug.name}</span>
+                    <div className="date">[{bug.createdAt.toString()}]</div>
+                    <button onClick={() => remove(bug)}>Remove</button>
+                </li>
+            )
+        }
+
+        const BugList = ({bugs, toggle, remove, removeClosed}) => {
+            return (
+                <section className="list">
+                        <ul>
+                            {bugs.map(bug => (<BugItem key={bug.id} {...{bug, toggle, remove}}/>))}
+                        </ul>
+                        <button onClick={() => removeClosed(bugs)}>Remove Closed</button>
+                    </section>
+            )
+        }
+        const Bugs = ({bugs, createNew, toggle, remove, removeClosed}) => {
+            
             const closedCount = bugs.reduce((count, bug) => bug.isClosed ? count + 1 : count, 0)
             return (
                 <>
                     <h3>Bugs</h3>
+
                     {/* BugStats */}
-                    <section className="stats">
-                        <span className="closed">{closedCount}</span>
-                        <span> / </span>
-                        <span>{bugs.length}</span>
-                    </section>
+                    <BugStats count={bugs.length} closedCount={closedCount}/>
 
                     {/* BugEditor */}
-                    <section className="editor">
-                        <label htmlFor="">Bug Name :</label>
-                        <input type="text" value={newBugName} onChange={e => setNewBugName(e.target.value)}/>
-                        <button onClick={() => createNew(newBugName)}>Add</button>
-                    </section>
+                    <BugEditor createNew={createNew}/>
 
                     {/* BugList */}
-                    <section className="list">
-                        <ul>
-                            {bugs.map(bug => (  <li key={bug.id}> {/* BugItem */}
-                                <span className={"bugname " + (bug.isClosed ? 'closed' : '')}
-                                    onClick={() => toggle(bug)}
-                                    >{bug.name}</span>
-                                <div className="date">[{bug.createdAt.toString()}]</div>
-                                <button onClick={() => remove(bug)}>Remove</button>
-                            </li>)
-                            )}
-                            
-                        </ul>
-                        <button onClick={() => removeClosed(bugs)}>Remove Closed</button>
-                    </section>
+                    <BugList {...{bugs, toggle, remove, removeClosed}}/>
                 </>
             )
         }

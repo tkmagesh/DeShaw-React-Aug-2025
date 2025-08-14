@@ -93,3 +93,36 @@ let action = { type : 'MAILS_DELETE', payload : mail_to_delete }
 
 ### Data Flow
 ![image](./images/state-management.png)
+
+## To setup an application
+### create-react-app (not recommended anymore, use Vite etc)
+```shell
+npx create-react-app [app-name]
+```
+
+### App Folder Structure
+```
+src
+    - bugs
+        - actions
+            -createNew.js
+            -toggle.js
+            -remove.js
+            -removeClosed.js
+            -index.js
+        - reducer
+            bugsReducer.js
+        - components
+            bug-stats.jsx
+            bug-editor.jsx
+            bug-list.jsx
+            bug-item.jsx
+        - index.jsx
+        - index.css
+    - store
+        - index.js
+    - projects
+        - actions
+        - reducers
+        - components
+```
