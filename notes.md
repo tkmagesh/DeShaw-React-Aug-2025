@@ -126,3 +126,14 @@ src
         - reducers
         - components
 ```
+
+### Container & Presentation Components
+#### Container/Smart Component (Bugs component)
+- Interacting with the redux infrastructure (state & dispatch)
+- Pass the state & action dispatchers to the presentation components
+- Should NOT handle any UI responsibility
+- Advisable to have fewer container/smart components
+#### Presentation/Dumb Component (BugStats, BugEditor, BugList, BugItem)
+- Accepts State & Action Dispatchers from the container components
+- Doesn't directly interact with the redux infrastructure (should not use 'useSelector', 'useDispatch' etc)
+- Can have any number of presentation components

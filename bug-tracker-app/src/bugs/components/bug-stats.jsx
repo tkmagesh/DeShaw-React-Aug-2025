@@ -1,5 +1,5 @@
 
-const BugStats = ({ count, closedCount }) => {
+const BugStats = ({count, closedCount}) => {
   return (
     <section className="stats">
       <span className="closed">{closedCount}</span>

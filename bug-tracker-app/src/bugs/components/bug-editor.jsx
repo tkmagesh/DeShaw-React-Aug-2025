@@ -1,3 +1,4 @@
+ 
 import { useState } from "react";
 
 const BugEditor = ({ createNew }) => {
@@ -15,4 +16,4 @@ const BugEditor = ({ createNew }) => {
   );
 };
 
-export default BugEditor;
+export default BugEditor; 
