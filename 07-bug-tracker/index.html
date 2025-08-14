@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Tracker</title>
+    <style>
+        body{
+            margin-left: 50px;
+        }
+        section{
+            margin-bottom: 10px;
+        }
+        .stats, .bugname {
+            font-size: 18pt;
+        }
+        .closed {
+            font-style: italic;
+            text-decoration: line-through;
+            font-weight: bold;
+            color: red;
+        }
+        .bugname {
+            cursor: pointer;
+        }
+        ul {
+            width: 500px;
+            list-style: none;
+            -webkit-padding-start: 0px;
+        }
+        li{
+            border : 1px solid gray;
+            background-color: #e7e7e7;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script src="babel.min.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="redux.js"></script>
+    <!-- 
+    Use Cases:
+    1. Add new bugs
+    2. List the added bugs
+    3. Toggle the 'closed' status of any bug
+    4. Remove any bug
+    5. Display stats (# of closed bugs / total # of bugs)
+    6. Organize the code 
+    7. Persist the bugs in the server
+    8. Add projects module
+    9. Build and Deploy
+    -->
+    <script type="text/babel">
+        const Bugs = () => {
+            return (
+                <>
+                    <h3>Bugs</h3>
+                    <section className="stats">
+                        <span className="closed">1</span>
+                        <span> / </span>
+                        <span>2</span>
+                    </section>
+                    <section className="editor">
+                        <label htmlFor="">Bug Name :</label>
+                        <input type="text" name="" id=""/>
+                        <button>Add</button>
+                    </section>
+                    <section className="list">
+                        <ul>
+                            <li>
+                                <span className="bugname">[Bug - 1]</span>
+                                <div className="date">[createdAt]</div>
+                                <button>Remove</button>
+                            </li>
+                            <li>
+                                <span className="bugname closed">[Bug - 2]</span>
+                                <div className="date">[createdAt]</div>
+                                <button>Remove</button>
+                            </li>
+                        </ul>
+                        <button>Remove Closed</button>
+                    </section>
+                </>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Bugs/>)
+    </script>
+</head>
+<body>
+    <h1>Bug Tracker</h1>
+    <hr>
+    <div id="root">
+    </div>
+</body>
+</html>
