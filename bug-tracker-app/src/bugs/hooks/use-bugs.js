@@ -3,7 +3,12 @@ import {  useSelector } from "react-redux";
 function useBugs() {
 
   // accessing the store state
-  const bugs = useSelector((storeState) => storeState.bugs);
+  const {bugs, projects} = useSelector((storeState) => {
+    return {
+      bugs : storeState.bugs.map(bug => ({...bug, projectName : storeState.projects.find(p => p.id === bug.projectId).name})),
+      projects : storeState.projects
+    }
+  });
 
   const closedCount = bugs.reduce(
     (count, bug) => (bug.isClosed ? count + 1 : count),
@@ -12,7 +17,8 @@ function useBugs() {
 
   return {
     closedCount,
-    bugs
+    bugs,
+    projects
   }
 }
 

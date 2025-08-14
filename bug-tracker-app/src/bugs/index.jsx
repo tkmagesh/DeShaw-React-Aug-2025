@@ -7,7 +7,7 @@ import useBugsActions from './hooks/use-bug-actions';
 
 const Bugs = () => {
 
-  const { bugs, closedCount} = useBugs()
+  const { bugs, closedCount, projects} = useBugs()
   const { createNew, toggle, remove, removeClosed } = useBugsActions() 
   
   return (
@@ -18,7 +18,7 @@ const Bugs = () => {
       <BugStats count={bugs.length} closedCount={closedCount} />
       
       {/* BugEditor */}
-      <BugEditor createNew={createNew} />
+      <BugEditor createNew={createNew} projects={projects}/>
       
       {/* BugList */}
       <BugList {...{ bugs, toggle, remove, removeClosed }} />
