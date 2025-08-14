@@ -112,19 +112,24 @@
             return (
                 <>
                     <h3>Bugs</h3>
+                    {/* BugStats */}
                     <section className="stats">
                         <span className="closed">{closedCount}</span>
                         <span> / </span>
                         <span>{bugs.length}</span>
                     </section>
+
+                    {/* BugEditor */}
                     <section className="editor">
                         <label htmlFor="">Bug Name :</label>
                         <input type="text" value={newBugName} onChange={e => setNewBugName(e.target.value)}/>
                         <button onClick={() => createNew(newBugName)}>Add</button>
                     </section>
+
+                    {/* BugList */}
                     <section className="list">
                         <ul>
-                            {bugs.map(bug => (<li key={bug.id}>
+                            {bugs.map(bug => (  <li key={bug.id}> {/* BugItem */}
                                 <span className={"bugname " + (bug.isClosed ? 'closed' : '')}
                                     onClick={() => toggle(bug)}
                                     >{bug.name}</span>
